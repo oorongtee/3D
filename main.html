@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Three.js Example</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 創建場景
+        const scene = new THREE.Scene();
+
+        // 創建相機
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        // 創建渲染器
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 創建立方體的幾何體
+        const geometry = new THREE.BoxGeometry();
+
+        // 創建材質
+        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+        // 創建立方體網格並添加到場景中
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // 將相機放置在 z 軸上
+        camera.position.z = 5;
+
+        // 創建動畫函數
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 讓立方體旋轉
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // 渲染場景和相機
+            renderer.render(scene, camera);
+        }
+
+        // 開始動畫循環
+        animate();
+
+        // 調整窗口大小時更新渲染器和相機
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
